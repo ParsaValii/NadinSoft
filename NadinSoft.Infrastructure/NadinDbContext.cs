@@ -12,13 +12,13 @@ namespace NadinSoft.Infrastructure
     {
         readonly Action _disposeAction;
         public NadinDbContext() { }
-        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        // {
-        //     optionsBuilder
-        //         .UseSqlServer(
-        //             "Server=localhost;Database=NadinDB;Integrated Security=True;TrustServerCertificate=True;"
-        //         );
-        // }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder
+                .UseSqlServer(
+                    "Server=localhost;Database=NadinDB;Integrated Security=True;TrustServerCertificate=True;"
+                );
+        }
         public NadinDbContext(DbContextOptions options) : base(options) { }
         public NadinDbContext(DbContextOptions options, Action disposeAction) : this(options)
         {
