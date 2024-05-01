@@ -4,6 +4,8 @@ using NadinSoft.Infrastructure;
 using NadinSoft.Infrastructure.Utilites;
 using NadinSoft.Infrastructure.Extentions;
 using NadinSoft.Infrastructure.MiddleWares;
+using NadinSoft.Domain.Interfaces;
+using NadinSoft.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +34,9 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddCustomIdentity();
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
+
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 
 var app = builder.Build();

@@ -2,7 +2,9 @@ using AutoMapper;
 using NadinSoft.Domain.Dtos;
 using NadinSoft.Domain.Exeptions;
 using NadinSoft.Domain.Interfaces;
+using NadinSoft.Domain.Repository;
 using NadinSoft.Infrastructure;
+using NadinSoft.Infrastructure.Services;
 using NadinSoft.Test.Mocks;
 
 namespace NadinSoft.Test
@@ -12,11 +14,14 @@ namespace NadinSoft.Test
         IProductService _productService;
         private NadinDbContext _context;
         private IMapper _mapper;
+        private IProductRepository _repository;
 
         public ProductServiceTests()
         {
             _context = DatabaseFactory.CreateNadinDb();
             _mapper = AutoMapperFactory.CreateMapper();
+            _repository = new ProductRepository(_context);
+            _productService = new ProductService(_mapper, _context, _repository);
         }
 
         [Fact]
