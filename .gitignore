@@ -1,0 +1,10 @@
+.vs
+*/bin
+*/obj
+.config
+*/wwwroot
+node_modules
+package-lock.json
+package.json
+*.json
+*.Wav
