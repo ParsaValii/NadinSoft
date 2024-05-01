@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NadinSoft.Infrastructure;
 using NadinSoft.Infrastructure.Utilites;
 using NadinSoft.Infrastructure.Extentions;
+using NadinSoft.Infrastructure.MiddleWares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +46,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
+
+app.UseMiddleware<ErrorHandling>();
 
 app.UseAuthorization();
 
