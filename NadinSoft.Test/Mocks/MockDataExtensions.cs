@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
 using NadinSoft.Domain.Entities;
@@ -14,7 +10,7 @@ namespace NadinSoft.Test.Mocks
 
         static MockDataExtensions()
         {
-            //TODO: add rules for other fields if needed
+
             _products = new Faker<Product>()
                 .RuleFor(p => p.Id, (_, _) => Guid.NewGuid())
                 .RuleFor(p => p.ManufactureEmail, (f, _) => f.Person.Email)
@@ -27,7 +23,7 @@ namespace NadinSoft.Test.Mocks
 
         }
 
-        //TODO: add other fields as parameter such as User
+
         public static Product MockProduct(this DbContext context)
         {
             var product = _products.Generate();

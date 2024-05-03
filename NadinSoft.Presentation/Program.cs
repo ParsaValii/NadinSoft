@@ -5,8 +5,9 @@ using NadinSoft.Infrastructure.Utilites;
 using NadinSoft.Infrastructure.Extentions;
 using NadinSoft.Infrastructure.MiddleWares;
 using NadinSoft.Domain.Interfaces;
-using NadinSoft.Infrastructure.Services;
-using NadinSoft.Domain.Repository;
+using NadinSoft.Application.Services;
+using NadinSoft.Infrastructure.Repositories;
+using NadinSoft.Application.RepositoryInterfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

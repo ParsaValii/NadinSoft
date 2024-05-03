@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using NadinSoft.Application.RepositoryInterfaces;
 using NadinSoft.Domain.Entities;
-using NadinSoft.Domain.Repository;
 
-namespace NadinSoft.Infrastructure.Services
+namespace NadinSoft.Infrastructure.Repositories
 {
     public class ProductRepository : IProductRepository
     {
@@ -25,8 +21,10 @@ namespace NadinSoft.Infrastructure.Services
             _context.Remove(p);
             await _context.SaveChangesAsync();
         }
-        public async Task SaveProduct(Product p)
+
+        public async Task UpdateProduct(Product p)
         {
+            _context.Update(p);
             await _context.SaveChangesAsync();
         }
     }

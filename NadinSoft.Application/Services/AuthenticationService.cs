@@ -1,17 +1,13 @@
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using NadinSoft.Domain.Dtos;
 using NadinSoft.Domain.Interfaces;
 
-namespace NadinSoft.Infrastructure.Services
+namespace NadinSoft.Application.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
@@ -41,9 +37,7 @@ namespace NadinSoft.Infrastructure.Services
         {
             var identityUser = await _userManager.FindByEmailAsync(user.UserName);
             if (identityUser is null)
-            {
                 return false;
-            }
 
             return await _userManager.CheckPasswordAsync(identityUser, user.Password);
         }
