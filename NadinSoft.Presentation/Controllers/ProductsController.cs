@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NadinSoft.Infrastructure;
-using NadinSoft.Domain.Interfaces;
 using NadinSoft.Domain.Dtos;
+using NadinSoft.Application.Interfaces;
 
 namespace NadinSoft.Presentation.Controllers
 {
@@ -20,24 +20,17 @@ namespace NadinSoft.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts([FromQuery] GetProductsRequestDto request)
-        {
-            return Ok(await _productService.GetProducts(request));
-        }
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts([FromQuery] GetProductsRequestDto request) =>
+            Ok(await _productService.GetProducts(request));
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProductDto>> GetProduct(Guid id)
-        {
-            var product = await _productService.GetProductById(id);
-
-            if (product == null)
+        public async Task<ActionResult<ProductDto>> GetProduct(Guid id) =>
+            await _productService.GetProductById(id) switch
             {
-                return NotFound();
-            }
-
-            return product;
-        }
+                null => NotFound(),
+                ProductDto product => Ok(product)
+            };
 
         [HttpPut("{id}")]
         [Authorize]
@@ -66,6 +59,7 @@ namespace NadinSoft.Presentation.Controllers
         {
             string jwt = Request.Headers.Authorization.ToString();
             var userId = await _authenticationService.GetIdFromJwt(jwt);
+
             var product = await _productService.GetProductById(id);
             if (product == null)
             {

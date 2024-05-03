@@ -1,7 +1,6 @@
 ﻿using NadinSoft.Domain.Dtos;
 
-namespace NadinSoft.Domain.Interfaces;
-
+namespace NadinSoft.Application.Interfaces;
 public interface IAuthenticationService
 {
     Task<bool> Login(LoginUserDto user);

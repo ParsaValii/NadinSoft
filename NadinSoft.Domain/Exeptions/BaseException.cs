@@ -4,12 +4,12 @@ namespace NadinSoft.Domain.Exeptions
 {
     public class BaseException : Exception
     {
-        public string Message;
+        public string ErrorMessage;
         public HttpStatusCode StatusCode;
 
         public BaseException(string message, HttpStatusCode statusCode)
         {
-            Message = message;
+            ErrorMessage = message;
             StatusCode = statusCode;
         }
     }

@@ -34,7 +34,7 @@ namespace NadinSoft.Infrastructure.MiddleWares
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)exception.StatusCode;
-            await context.Response.WriteAsync(exception.Message);
+            await context.Response.WriteAsync(exception.ErrorMessage);
         }
 
         private static Task HandleGlobalExceptionAsync(HttpContext context, Exception exception)
