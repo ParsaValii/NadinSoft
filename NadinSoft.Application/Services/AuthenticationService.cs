@@ -4,8 +4,8 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using NadinSoft.Application.Interfaces;
 using NadinSoft.Domain.Dtos;
-using NadinSoft.Domain.Interfaces;
 
 namespace NadinSoft.Application.Services
 {

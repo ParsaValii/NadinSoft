@@ -4,7 +4,7 @@ using NadinSoft.Infrastructure;
 using NadinSoft.Infrastructure.Utilites;
 using NadinSoft.Infrastructure.Extentions;
 using NadinSoft.Infrastructure.MiddleWares;
-using NadinSoft.Domain.Interfaces;
+using NadinSoft.Application.Interfaces;
 using NadinSoft.Application.Services;
 using NadinSoft.Infrastructure.Repositories;
 using NadinSoft.Application.RepositoryInterfaces;

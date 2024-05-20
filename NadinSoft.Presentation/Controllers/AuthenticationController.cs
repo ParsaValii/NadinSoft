@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using NadinSoft.Application.Interfaces;
 using NadinSoft.Domain.Dtos;
-using NadinSoft.Domain.Interfaces;
 
 namespace NadinSoft.Presentation.Controllers
 {
