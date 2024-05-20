@@ -1,9 +1,9 @@
 using AutoMapper;
+using NadinSoft.Application.Interfaces;
 using NadinSoft.Application.RepositoryInterfaces;
 using NadinSoft.Application.Services;
 using NadinSoft.Domain.Dtos;
 using NadinSoft.Domain.Exeptions;
-using NadinSoft.Domain.Interfaces;
 using NadinSoft.Infrastructure;
 using NadinSoft.Infrastructure.Repositories;
 using NadinSoft.Test.Mocks;

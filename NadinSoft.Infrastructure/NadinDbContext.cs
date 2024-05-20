@@ -10,10 +10,12 @@ namespace NadinSoft.Infrastructure
         public NadinDbContext() { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            // for Test , You Should Comment This Part
             optionsBuilder
                 .UseSqlServer(
                     "Server=localhost;Database=NadinDB;Integrated Security=True;TrustServerCertificate=True;"
                 );
+            // for Test , You Should Comment This Part
         }
         public NadinDbContext(DbContextOptions options) : base(options) { }
         public NadinDbContext(DbContextOptions options, Action disposeAction) : this(options)
