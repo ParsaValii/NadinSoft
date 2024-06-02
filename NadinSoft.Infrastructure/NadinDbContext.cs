@@ -25,6 +25,18 @@ namespace NadinSoft.Infrastructure
 
         public DbSet<Product> Products { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Product>()
+            .HasIndex(p => p.ProduceDate)
+            .IsUnique();
+        modelBuilder.Entity<Product>()
+            .HasIndex(p => p.ManufactureEmail)
+            .IsUnique();
+    }
+
         public override void Dispose()
         {
             _disposeAction?.Invoke();
