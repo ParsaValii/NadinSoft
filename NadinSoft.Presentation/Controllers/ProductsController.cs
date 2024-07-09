@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using NadinSoft.Infrastructure;
 using NadinSoft.Domain.Dtos;
 using NadinSoft.Application.Interfaces;
+using NadinSoft.Application.Products.Queries.GetAllProducts;
+using MediatR;
 
 namespace NadinSoft.Presentation.Controllers
 {
@@ -12,16 +14,18 @@ namespace NadinSoft.Presentation.Controllers
     {
         private readonly IProductService _productService;
         private readonly IAuthenticationService _authenticationService;
+        private readonly IMediator _mediator;
 
-        public ProductsController(IProductService productService, NadinDbContext context, IAuthenticationService authenticationService)
+        public ProductsController(IProductService productService, NadinDbContext context, IAuthenticationService authenticationService, IMediator mediator)
         {
             _productService = productService;
             _authenticationService = authenticationService;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts([FromQuery] GetProductsRequestDto request) =>
-            Ok(await _productService.GetProducts(request));
+        public async Task<ActionResult<List<GetAllProductsQueryResponse>>> GetProducts() =>
+            Ok(await _mediator.Send(new GetAllProductsQueryRequest()));
 
 
         [HttpGet("{id}")]
