@@ -5,6 +5,7 @@ using NadinSoft.Domain.Dtos;
 using NadinSoft.Application.Interfaces;
 using NadinSoft.Application.Products.Queries.GetAllProducts;
 using MediatR;
+using NadinSoft.Application.Products.Queries.GetProductById;
 
 namespace NadinSoft.Presentation.Controllers
 {
@@ -29,12 +30,8 @@ namespace NadinSoft.Presentation.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProductDto>> GetProduct(Guid id) =>
-            await _productService.GetProductById(id) switch
-            {
-                null => NotFound(),
-                ProductDto product => Ok(product)
-            };
+        public async Task<ActionResult<GetProductByIdQueryResponse>> GetProduct(Guid id) =>
+            Ok(await _mediator.Send(new GetProductByIdQueryRequest(id)));
 
         [HttpPut("{id}")]
         [Authorize]
