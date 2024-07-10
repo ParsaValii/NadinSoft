@@ -9,6 +9,7 @@ using NadinSoft.Application.Products.Queries.GetProductById;
 using NadinSoft.Application.Products.Commands.CreateProduct;
 using NadinSoft.Application.Products.Commands.UpdateProduct;
 using NadinSoft.Application.Products.Commands.DeleteProduct;
+using NadinSoft.Application.Auth.GetIdFromJwt;
 
 namespace NadinSoft.Presentation.Controllers
 {
@@ -39,8 +40,8 @@ namespace NadinSoft.Presentation.Controllers
         public async Task<ActionResult<UpdateProductCommandResponse>> UpdateProduct(UpdateProductCommandRequest request)
         {
             string jwt = Request.Headers.Authorization.ToString();
-            var userId = await _authenticationService.GetIdFromJwt(jwt);
-            return Ok(await _mediator.Send(request with { UserId = userId }));
+            var getIdFromJwtCommandResponse = await _mediator.Send(new GetIdFromJwtCommandRequest(jwt));
+            return Ok(await _mediator.Send(request with { UserId = getIdFromJwtCommandResponse.UserId }));
         }
 
         [HttpPost]
@@ -48,8 +49,8 @@ namespace NadinSoft.Presentation.Controllers
         public async Task<ActionResult<CreateProductCommandResponse>> InsertProduct(CreateProductCommandRequest request)
         {
             string jwt = Request.Headers.Authorization.ToString();
-            var userId = await _authenticationService.GetIdFromJwt(jwt);
-            return Ok(await _mediator.Send(request with { UserId = userId }));
+            var getIdFromJwtCommandResponse = await _mediator.Send(new GetIdFromJwtCommandRequest(jwt));
+            return Ok(await _mediator.Send(request with { UserId = getIdFromJwtCommandResponse.UserId }));
         }
 
 
@@ -59,9 +60,9 @@ namespace NadinSoft.Presentation.Controllers
         public async Task<ActionResult<DeleteProductCommandResponse>> DeleteProduct(Guid id)
         {
             string jwt = Request.Headers.Authorization.ToString();
-            var userId = await _authenticationService.GetIdFromJwt(jwt);
+            var getIdFromJwtCommandResponse = await _mediator.Send(new GetIdFromJwtCommandRequest(jwt));
             
-            return Ok(await _mediator.Send(new DeleteProductCommandRequest(id, userId)));
+            return Ok(await _mediator.Send(new DeleteProductCommandRequest(id, getIdFromJwtCommandResponse.UserId)));
         }
     }
 }
