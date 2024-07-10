@@ -1,7 +1,6 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using NadinSoft.Infrastructure;
-using NadinSoft.Infrastructure.Utilites;
 using NadinSoft.Infrastructure.Extentions;
 using NadinSoft.Infrastructure.MiddleWares;
 using NadinSoft.Application.Interfaces;
@@ -11,6 +10,7 @@ using NadinSoft.Application.RepositoryInterfaces;
 using MediatR;
 using System.Reflection;
 using NadinSoft.Application.Products.Queries.GetAllProducts;
+using NadinSoft.Application.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,7 +43,6 @@ builder.Services.AddCustomIdentity();
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
-builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 var app = builder.Build();

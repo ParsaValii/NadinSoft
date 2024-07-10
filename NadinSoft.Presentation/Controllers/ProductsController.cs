@@ -6,7 +6,7 @@ using NadinSoft.Application.Interfaces;
 using NadinSoft.Application.Products.Queries.GetAllProducts;
 using MediatR;
 using NadinSoft.Application.Products.Queries.GetProductById;
-using NadinSoft.Application.Products.Commands;
+using NadinSoft.Application.Products.Commands.CreateProduct;
 using NadinSoft.Application.Products.Commands.UpdateProduct;
 using NadinSoft.Application.Products.Commands.DeleteProduct;
 
@@ -16,13 +16,11 @@ namespace NadinSoft.Presentation.Controllers
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductService _productService;
         private readonly IAuthenticationService _authenticationService;
         private readonly IMediator _mediator;
 
-        public ProductsController(IProductService productService, NadinDbContext context, IAuthenticationService authenticationService, IMediator mediator)
+        public ProductsController(NadinDbContext context, IAuthenticationService authenticationService, IMediator mediator)
         {
-            _productService = productService;
             _authenticationService = authenticationService;
             _mediator = mediator;
         }
