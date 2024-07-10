@@ -3,7 +3,7 @@ using MediatR;
 using NadinSoft.Application.RepositoryInterfaces;
 using NadinSoft.Domain.Entities;
 
-namespace NadinSoft.Application.Products.Commands;
+namespace NadinSoft.Application.Products.Commands.CreateProduct;
 
 public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandRequest, CreateProductCommandResponse>
 {
