@@ -8,6 +8,7 @@ using MediatR;
 using NadinSoft.Application.Products.Queries.GetProductById;
 using NadinSoft.Application.Products.Commands;
 using NadinSoft.Application.Products.Commands.UpdateProduct;
+using NadinSoft.Application.Products.Commands.DeleteProduct;
 
 namespace NadinSoft.Presentation.Controllers
 {
@@ -57,19 +58,12 @@ namespace NadinSoft.Presentation.Controllers
 
         [HttpDelete("{id}")]
         [Authorize]
-        public async Task<IActionResult> DeleteProduct(Guid id)
+        public async Task<ActionResult<DeleteProductCommandResponse>> DeleteProduct(Guid id)
         {
             string jwt = Request.Headers.Authorization.ToString();
             var userId = await _authenticationService.GetIdFromJwt(jwt);
-
-            var product = await _productService.GetProductById(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            await _productService.DeleteProduct(id, userId);
-            return NoContent();
+            
+            return Ok(await _mediator.Send(new DeleteProductCommandRequest(id, userId)));
         }
     }
 }
