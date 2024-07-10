@@ -18,10 +18,11 @@ namespace NadinSoft.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return p.Id;
         }
-        public async Task DeleteProduct(Product p)
+        public async Task<bool> DeleteProduct(Product p)
         {
             _context.Remove(p);
             await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> UpdateProduct(Product p)
