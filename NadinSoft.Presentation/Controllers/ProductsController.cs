@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NadinSoft.Infrastructure;
 using NadinSoft.Domain.Dtos;
-using NadinSoft.Application.Interfaces;
 using NadinSoft.Application.Products.Queries.GetAllProducts;
 using MediatR;
 using NadinSoft.Application.Products.Queries.GetProductById;
@@ -17,12 +16,10 @@ namespace NadinSoft.Presentation.Controllers
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
-        private readonly IAuthenticationService _authenticationService;
         private readonly IMediator _mediator;
 
-        public ProductsController(NadinDbContext context, IAuthenticationService authenticationService, IMediator mediator)
+        public ProductsController(NadinDbContext context, IMediator mediator)
         {
-            _authenticationService = authenticationService;
             _mediator = mediator;
         }
 

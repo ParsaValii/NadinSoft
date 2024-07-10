@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using NadinSoft.Infrastructure;
 using NadinSoft.Infrastructure.Extentions;
 using NadinSoft.Infrastructure.MiddleWares;
-using NadinSoft.Application.Interfaces;
-using NadinSoft.Application.Services;
 using NadinSoft.Infrastructure.Repositories;
 using NadinSoft.Application.RepositoryInterfaces;
 using MediatR;
@@ -42,7 +40,6 @@ builder.Services.AddCustomIdentity();
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
-builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 var app = builder.Build();
