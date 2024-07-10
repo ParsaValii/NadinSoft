@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using NadinSoft.Application.RepositoryInterfaces;
 using NadinSoft.Domain.Entities;
 
@@ -23,10 +24,19 @@ namespace NadinSoft.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateProduct(Product p)
+        public async Task<bool> UpdateProduct(Product p)
         {
-            _context.Update(p);
-            await _context.SaveChangesAsync();
+            var existingProduct = await _context.Products.FindAsync(p.Id);
+            if (existingProduct != null)
+            {
+                _context.Entry(existingProduct).CurrentValues.SetValues(p);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

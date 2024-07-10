@@ -7,6 +7,7 @@ using NadinSoft.Application.Products.Queries.GetAllProducts;
 using MediatR;
 using NadinSoft.Application.Products.Queries.GetProductById;
 using NadinSoft.Application.Products.Commands;
+using NadinSoft.Application.Products.Commands.UpdateProduct;
 
 namespace NadinSoft.Presentation.Controllers
 {
@@ -34,14 +35,13 @@ namespace NadinSoft.Presentation.Controllers
         public async Task<ActionResult<GetProductByIdQueryResponse>> GetProduct(Guid id) =>
             Ok(await _mediator.Send(new GetProductByIdQueryRequest(id)));
 
-        [HttpPut("{id}")]
+        [HttpPut]
         [Authorize]
-        public async Task<IActionResult> UpdateProduct(Guid id, UpdateProductRequestDto product)
+        public async Task<ActionResult<UpdateProductCommandResponse>> UpdateProduct(UpdateProductCommandRequest request)
         {
             string jwt = Request.Headers.Authorization.ToString();
             var userId = await _authenticationService.GetIdFromJwt(jwt);
-            await _productService.UpdateProduct(id, product, userId);
-            return NoContent();
+            return Ok(await _mediator.Send(request with { UserId = userId }));
         }
 
         [HttpPost]

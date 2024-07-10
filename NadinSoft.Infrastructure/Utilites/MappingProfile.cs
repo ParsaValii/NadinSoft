@@ -1,5 +1,6 @@
 using AutoMapper;
 using NadinSoft.Application.Products.Commands;
+using NadinSoft.Application.Products.Commands.UpdateProduct;
 using NadinSoft.Application.Products.Queries.GetAllProducts;
 using NadinSoft.Application.Products.Queries.GetProductById;
 using NadinSoft.Domain.Dtos;
@@ -17,6 +18,7 @@ namespace NadinSoft.Infrastructure.Utilites
             CreateMap<Product, GetAllProductsQueryResponse>().ReverseMap();
             CreateMap<GetProductByIdQueryResponse, Product>().ReverseMap();
             CreateMap<CreateProductCommandRequest, Product>().ReverseMap();
+            CreateMap<UpdateProductCommandRequest, Product>().ReverseMap();
         }
     }
 }
