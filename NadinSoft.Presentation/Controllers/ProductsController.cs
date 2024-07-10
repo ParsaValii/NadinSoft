@@ -6,6 +6,7 @@ using NadinSoft.Application.Interfaces;
 using NadinSoft.Application.Products.Queries.GetAllProducts;
 using MediatR;
 using NadinSoft.Application.Products.Queries.GetProductById;
+using NadinSoft.Application.Products.Commands;
 
 namespace NadinSoft.Presentation.Controllers
 {
@@ -45,11 +46,11 @@ namespace NadinSoft.Presentation.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task InsertProduct(CreateProductRequestDto product)
+        public async Task<ActionResult<CreateProductCommandResponse>> InsertProduct(CreateProductCommandRequest request)
         {
             string jwt = Request.Headers.Authorization.ToString();
             var userId = await _authenticationService.GetIdFromJwt(jwt);
-            await _productService.InsertItem(product, userId);
+            return Ok(await _mediator.Send(request with { UserId = userId }));
         }
 
 

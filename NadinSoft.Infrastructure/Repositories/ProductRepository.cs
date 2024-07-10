@@ -11,10 +11,11 @@ namespace NadinSoft.Infrastructure.Repositories
             _context = context;
         }
         public IQueryable<Product> Products => _context.Products;
-        public async Task CreateProduct(Product p)
+        public async Task<Guid> CreateProduct(Product p)
         {
             await _context.AddAsync(p);
             await _context.SaveChangesAsync();
+            return p.Id;
         }
         public async Task DeleteProduct(Product p)
         {
