@@ -18,9 +18,15 @@ public class LoginCommandHandler : IRequestHandler<LoginCommandRequest, LoginCom
     public async Task<LoginCommandResponse> Handle(LoginCommandRequest request, CancellationToken cancellationToken)
     {
         var identityUser = await _userManager.FindByEmailAsync(request.UserName);
-            if (identityUser is null)
-                return new LoginCommandResponse(false);
+        if (identityUser is null)
+            return new LoginCommandResponse(false, null);
 
-            return new LoginCommandResponse(await _userManager.CheckPasswordAsync(identityUser, request.Password));
+        var passwordCheck = await _userManager.CheckPasswordAsync(identityUser, request.Password);
+        if (!passwordCheck)
+            return new LoginCommandResponse(false, null);
+
+        var roles = await _userManager.GetRolesAsync(identityUser);
+        return new LoginCommandResponse(true, roles);
     }
 }
+

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using NadinSoft.Application.Auth.Login;
 using NadinSoft.Application.Auth.Register;
 using NadinSoft.Application.Auth.Token;
-using NadinSoft.Application.Interfaces;
 using NadinSoft.Domain.Dtos;
 
 namespace NadinSoft.Presentation.Controllers
@@ -12,12 +11,10 @@ namespace NadinSoft.Presentation.Controllers
     [Route("api/[controller]")]
     public class AuthenticationController : ControllerBase
     {
-        private readonly IAuthenticationService _authService;
         private readonly IMediator _mediator;
 
-        public AuthenticationController(IAuthenticationService authService, IMediator mediator)
+        public AuthenticationController(IMediator mediator)
         {
-            _authService = authService;
             _mediator = mediator;
         }
 
