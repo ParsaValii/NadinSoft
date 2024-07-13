@@ -12,7 +12,7 @@ namespace NadinSoft.Domain.Entities
         public required string Name { get; set; }
 
         [Display(Name = "Produce Date")]
-        public DateTime ProduceDate { get; set; }
+        public DateTime ProduceDate { get; set; } = DateTime.Now;
 
         [Display(Name = "Manufacture Phone")]
         [Required(ErrorMessage = "required")]
