@@ -9,6 +9,7 @@ using MediatR;
 using System.Reflection;
 using NadinSoft.Application.Products.Queries.GetAllProducts;
 using NadinSoft.Application.Mapping;
+using NadinSoft.Presentation.ExtentionMethods;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +23,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(GetAllProductsQueryHandler).Assembly);
 
 builder.Services.AddDbContext<NadinDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("NadinConnectinString")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("NadinConnectionString")));
 
 builder.Services.AddDbContext<NadinDbContext>(options => options.UseSqlite("Filename=:memory:"));
 
@@ -60,5 +61,8 @@ app.UseMiddleware<ErrorHandling>();
 app.UseAuthorization();
 
 app.MapControllers();
+
+DatabaseInitializer.Initialize(app.Services);
+
 
 app.Run();
