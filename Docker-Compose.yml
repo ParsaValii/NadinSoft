@@ -1,6 +1,18 @@
 version: '3.8'
 
 services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "1993Bourse$$"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - backend
+
   nadinsoft-api:
     image: nadinsoftpresentation:dev
     ports:
@@ -9,18 +21,13 @@ services:
     depends_on:
       - sqlserver
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__NadinConnectionString=Server=sqlserver;Database=NadinDB;User Id=sa;Password=1993Bourse$$;TrustServerCertificate=True;
-
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=1993Bourse$$
-    ports:
-      - "1433:1433"
-    volumes:
-      - sqlserver_data:/var/opt/mssql
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__NadinConnectionString: "Server=sqlserver;Database=nadindb;User Id=sa;Password=1993Bourse$$;Encrypt=False;"
+    networks:
+      - backend
 
 volumes:
   sqlserver_data:
+
+networks:
+  backend:
