@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NadinSoft.Application.Auth.Login;
 using NadinSoft.Application.Auth.Register;
@@ -19,6 +20,7 @@ namespace NadinSoft.Presentation.Controllers
         }
 
         [HttpPost("Register")]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterCommandRequest request)
         {
             var user = await _mediator.Send(request);
@@ -30,6 +32,7 @@ namespace NadinSoft.Presentation.Controllers
         }
 
         [HttpPost("Login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginCommandRequest request)
         {
             var user = await _mediator.Send(request);
