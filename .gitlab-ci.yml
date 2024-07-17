@@ -1,0 +1,39 @@
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  DOTNET_VERSION: "8.0"
+  PROJECT_NAME: "NadinSoft"
+
+before_script:
+  - apt-get update
+  - apt-get install -y wget
+  - wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+  - dpkg -i packages-microsoft-prod.deb
+  - apt-get update
+  - apt-get install -y apt-transport-https
+  - apt-get update
+  - apt-get install -y dotnet-sdk-$DOTNET_VERSION
+
+build:
+  stage: build
+  script:
+    - dotnet restore
+    - dotnet build --configuration Release
+
+test:
+  stage: test
+  script:
+    - dotnet test
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Hello from deploy stage"
+  environment:
+    name: production
+    url: http://localhost:5000
+  only:
+    - master
