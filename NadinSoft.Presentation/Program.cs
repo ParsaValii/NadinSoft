@@ -10,6 +10,9 @@ using System.Reflection;
 using NadinSoft.Application.Products.Queries.GetAllProducts;
 using NadinSoft.Application.Mapping;
 using NadinSoft.Presentation.ExtentionMethods;
+using NSwag;
+using NSwag.Generation.Processors.Security;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +21,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddOpenApiDocument(configure =>
+{
+    configure.Title = "Your API";
+    configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+    {
+        Type = OpenApiSecuritySchemeType.ApiKey,
+        Name = "Authorization",
+        In = OpenApiSecurityApiKeyLocation.Header,
+        Description = "Type into the textbox: Bearer {your JWT token}."
+    });
+
+    configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+});
 
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(GetAllProductsQueryHandler).Assembly);
 
@@ -45,11 +61,10 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseOpenApi();
+    app.UseSwaggerUi();
 }
 
 app.UseHttpsRedirection();
